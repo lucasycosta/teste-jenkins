@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teste
+  namespace: wayconsig-eks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teste
+  template:
+    metadata:
+      labels:
+        app: teste
+    spec:
+      nodeSelector:
+        nome: wayconsig-node1
+      containers:
+      - name: teste
+        image: lucasycosta/teste:${TAG}
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teste-svc
+  namespace: wayconsig-eks
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "shared-key"
+spec:
+  selector:
+    app: teste
+  ports:
+  - protocol:  TCP
+    port:  8080
+    targetPort:  8080
