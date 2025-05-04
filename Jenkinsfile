@@ -78,6 +78,7 @@ pipeline{
 			steps{
 				script{
 					sh '''
+					aws eks update-kubeconfig --name eks-wayconsig-prd
 					export TAG=$BUILD_ID
                     envsubst < teste.yaml | kubectl apply -f teste.yaml
 					'''
