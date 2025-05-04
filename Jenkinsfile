@@ -42,7 +42,7 @@ pipeline{
 					def buildId = env.BUILD_ID
 					sh 'echo $BUILD_ID'
 
-					sh 'sudo docker build -t lucasycosta/teste:$BUILD_ID .'
+					sh 'docker build -t lucasycosta/teste:$BUILD_ID .'
 				}
 			}
 		}
@@ -50,8 +50,8 @@ pipeline{
 		stage('docker login'){
 			steps{
 				script{
-					sh 'sudo docker logout'
-					sh 'sudo docker login -u "lucasycosta" -p "Lucas14062000"'
+					sh 'docker logout'
+					sh 'docker login -u "lucasycosta" -p "Lucas14062000"'
 				}
 			}
 		}
@@ -59,7 +59,7 @@ pipeline{
 		stage('Push image'){
 			steps{
 				script{
-					sh 'sudo docker push lucasycosta/teste:$BUILD_ID'
+					sh 'docker push lucasycosta/teste:$BUILD_ID'
 				}
 			}
 		}
