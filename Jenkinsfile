@@ -1,6 +1,6 @@
 pipeline{
 	agent any
-
+	
 	tools {
         maven 'maven-jenkins'  // Nome que você deu na configuração
     }
