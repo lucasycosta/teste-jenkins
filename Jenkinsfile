@@ -16,25 +16,25 @@ pipeline{
 			}
 		}
 
-		stage('Deletar versao antiga'){
-			steps{
-				script{
-					def dockerImageId = sh(
-                        script: 'docker images --format "{{.ID}}" --filter "lucasycosta/teste"',
-                        returnStdout: true
-                    ).trim()
-                    echo "Docker Image ID: ${dockerImageId}"
+		// stage('Deletar versao antiga'){
+		// 	steps{
+		// 		script{
+		// 			def dockerImageId = sh(
+        //                 script: 'docker images --format "{{.ID}}" --filter "lucasycosta/teste"',
+        //                 returnStdout: true
+        //             ).trim()
+        //             echo "Docker Image ID: ${dockerImageId}"
 
-					sh """
-						if [ -z "${dockerImageId}" ]; then
-							echo "não há imagem para ser deletada"
-						else
-							docker rmi ${dockerImageId}
-						fi
-					"""
-				}
-			}
-		}
+		// 			sh """
+		// 				if [ -z "${dockerImageId}" ]; then
+		// 					echo "não há imagem para ser deletada"
+		// 				else
+		// 					docker rmi ${dockerImageId}
+		// 				fi
+		// 			"""
+		// 		}
+		// 	}
+		// }
 
 		stage('Build/Run Image Backend'){
 			steps{
