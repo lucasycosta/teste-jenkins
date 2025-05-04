@@ -4,10 +4,6 @@ pipeline{
 	tools {
         maven 'maven-jenkins'  // Nome que você deu na configuração
     }
-	
-	triggers {
-        githubPush()  
-    }
 
 	stages{
 		stage('Build Backend'){
