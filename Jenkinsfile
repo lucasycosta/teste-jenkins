@@ -78,7 +78,7 @@ pipeline{
 			steps{
 				script{
 					sh '''
-					export TAG=$BUILD_ID'
+					export TAG=$BUILD_ID
                     envsubst < teste.yaml | kubectl apply -f teste.yaml
 					'''
 				}
