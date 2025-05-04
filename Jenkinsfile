@@ -1,8 +1,12 @@
 pipeline{
 	agent any
-	
+
 	tools {
         maven 'maven-jenkins'  // Nome que você deu na configuração
+    }
+
+	environment {
+        AWS_DEFAULT_REGION = 'us-east-1'
     }
 
 	stages{
@@ -73,11 +77,13 @@ pipeline{
         stage('Deploy com a nova imagem'){
 			steps{
 				script{
-					sh '''
-					aws eks update-kubeconfig --name eks-wayconsig-prd
-					export TAG=$BUILD_ID
-                    envsubst < teste.yaml | kubectl apply -f teste.yaml
-					'''
+					withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+						sh '''
+						aws eks update-kubeconfig --name eks-wayconsig-prd
+						export TAG=$BUILD_ID
+						envsubst < teste.yaml | kubectl apply -f teste.yaml
+						'''
+					}
 				}
 			}
 		}
