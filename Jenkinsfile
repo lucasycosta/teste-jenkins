@@ -16,25 +16,25 @@ pipeline{
 			}
 		}
 
-		// stage('Deletar versao antiga'){
-		// 	steps{
-		// 		script{
-		// 			def dockerImageId = sh(
-        //                 script: 'docker images --format "{{.ID}}" --filter "lucasycosta/teste"',
-        //                 returnStdout: true
-        //             ).trim()
-        //             echo "Docker Image ID: ${dockerImageId}"
+		stage('Deletar versao antiga'){
+			steps{
+				script{
+					def dockerImageId = sh(
+                        script: 'docker images --format "{{.ID}}" --filter "lucasycosta/teste"',
+                        returnStdout: true
+                    ).trim()
+                    echo "Docker Image ID: ${dockerImageId}"
 
-		// 			sh """
-		// 				if [ -z "${dockerImageId}" ]; then
-		// 					echo "não há imagem para ser deletada"
-		// 				else
-		// 					docker rmi ${dockerImageId}
-		// 				fi
-		// 			"""
-		// 		}
-		// 	}
-		// }
+					sh """
+						if [ -z "${dockerImageId}" ]; then
+							echo "não há imagem para ser deletada"
+						else
+							docker rmi ${dockerImageId}
+						fi
+					"""
+				}
+			}
+		}
 
 		stage('Build/Run Image Backend'){
 			steps{
@@ -80,9 +80,9 @@ pipeline{
 					withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 						sh '''
 						aws eks update-kubeconfig --name eks-wayconsig-prd
-						export TAG=$BUILD_ID
 						kubectl set image deployment/teste teste=lucasycosta/teste:$BUILD_ID -n wayconsig-eks
 						'''
+						//export TAG=$BUILD_ID
 						//envsubst < teste.yaml | kubectl apply -f teste.yaml
 					}
 				}
