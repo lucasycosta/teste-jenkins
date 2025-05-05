@@ -20,7 +20,7 @@ pipeline{
 			steps{
 				script{
 					def dockerImageId = sh(
-                        script: 'docker images --format "{{.ID}}" --filter "lucasycosta/teste"',
+                        script: 'docker images --format "{{.ID}}" --filter "reference=lucasycosta/teste"',
                         returnStdout: true
                     ).trim()
                     echo "Docker Image ID: ${dockerImageId}"
