@@ -9,10 +9,6 @@ pipeline{
         AWS_DEFAULT_REGION = 'sa-east-1'
     }
 
-	environment {
-        AWS_DEFAULT_REGION = 'sa-east-1'
-    }
-
 	stages{
 		stage('Build Backend'){
 			steps{
