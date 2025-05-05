@@ -9,6 +9,10 @@ pipeline{
         AWS_DEFAULT_REGION = 'sa-east-1'
     }
 
+	environment {
+        AWS_DEFAULT_REGION = 'sa-east-1'
+    }
+
 	stages{
 		stage('Build Backend'){
 			steps{
@@ -81,8 +85,9 @@ pipeline{
 						sh '''
 						aws eks update-kubeconfig --name eks-wayconsig-prd
 						export TAG=$BUILD_ID
-						envsubst < teste.yaml | kubectl apply -f teste.yaml
+						kubectl set image deployment/teste minha-app=lucasycosta/teste:$BUILD_ID
 						'''
+						//envsubst < teste.yaml | kubectl apply -f teste.yaml
 					}
 				}
 			}
