@@ -81,7 +81,7 @@ pipeline{
 						sh '''
 						aws eks update-kubeconfig --name eks-wayconsig-prd
 						export TAG=$BUILD_ID
-						kubectl set image deployment/teste minha-app=lucasycosta/teste:$BUILD_ID -n wayconsig-eks
+						kubectl set image deployment/teste teste=lucasycosta/teste:$BUILD_ID -n wayconsig-eks
 						'''
 						//envsubst < teste.yaml | kubectl apply -f teste.yaml
 					}
